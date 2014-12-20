@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html ng-app="ngApp">
+<head>
+    <!-- Use / as a base for angular instead of # -->
+    <base href="/">
+    <!-- SCROLLS -->
+    <!-- load bootstrap and fontawesome via CDN -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
+    <link rel="stylesheet" type="text/css" href="/Content/assets/css/style.css">
+    <!-- SPELLS -->
+    <!-- load angular and angular route via CDN -->
+
+    <script src="https://cdn.socket.io/socket.io-1.2.1.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
+    <script src="/Content/controllers/main.js"></script>
+    <script src="/Content/assets/js/moment.js"></script>
+    <!--<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script> -->
+</head>
+<body ng-controller="mainController">
+    <!-- HEADER AND NAVBAR -->
+    <header>
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/">Websocket Chat App</a>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+                    <li><a href="#login"><i class="fa fa-user"></i> {{lUser}}</a></li>
+                    <li><a href="#chat"><i class="fa fa-list-alt"></i> Chat</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!-- MAIN CONTENT AND INJECTED VIEWS -->
+    <div id="main" class="container">
+        <form id="theForm">
+            <div ng-view></div>
+            @RenderBody()
+            <!-- angular templating -->
+            <!-- this is where content will be injected -->
+        </form>
+    </div>
+</body>
+</html>

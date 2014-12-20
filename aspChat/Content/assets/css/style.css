@@ -1,0 +1,21 @@
+.chat li{
+
+	list-style-type: none;
+
+
+}
+
+.chat li:nth-child(even){
+
+	background: #E4E4E4;
+
+
+}
+
+.chat{
+	font-size:  1.2em;
+}
+.chat .time{
+	font-size: .8em !important;
+	color: #2D2D2D;
+}
