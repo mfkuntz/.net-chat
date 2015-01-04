@@ -20,6 +20,7 @@ namespace aspChat.Controllers
 {
     public class ChatController : ApiController
     {
+        private NpgsqlConnection dbcon = new DbConnection().Connection;
         // GET api/chat
         public IEnumerable<string> Get()
         {
@@ -32,18 +33,18 @@ namespace aspChat.Controllers
 
             //Entity Framework implementation. 
 
-//            var db = new DB("awsPGS");
-//            var query = from b in db.Messages
-//                where b.Reciever == id
-//                select b;
-//            return query.ToList();
-           
-            
+            //            var db = new DB("awsPGS");
+            //            var query = from b in db.Messages
+            //                where b.Reciever == id
+            //                select b;
+            //            return query.ToList();
+
+
             //Dapper implentation
-            var con = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["awsPGS"].ToString());
-            con.Open();
-            var list =  con.Query<ChatMessage>("select * from \"Messages\" where reciever = @rec", new {rec = id}).ToList();
-            con.Close();
+
+            dbcon.Open();
+            var list = dbcon.Query<ChatMessage>("select * from \"Messages\" where reciever = @rec", new {rec = id}).ToList();
+            dbcon.Close();
             return list;
         }
 
@@ -51,9 +52,15 @@ namespace aspChat.Controllers
         public ChatMessage Post(ChatMessage message)
         {
             message.CreatedAt = DateTime.Now;
-            var db = new DB("awsPGS");
-            db.Messages.Add(message);
-            db.SaveChangesAsync();
+//            var db = new DB("awsPGS");
+//            db.Messages.Add(message);
+//            db.SaveChangesAsync();
+
+            dbcon.Open();
+            dbcon.Execute("insert into \"Messages\"(message,sender,reciever,createdAt values {@a, @b, @c, @d})",
+                new {a = message.Message, b = message.Sender, c = message.Reciever, d = message.CreatedAt});
+            dbcon.Close();
+
             return message;
         }
 

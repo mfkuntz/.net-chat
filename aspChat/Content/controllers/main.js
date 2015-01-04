@@ -77,7 +77,15 @@ ngApp.controller('chatController', function($scope, $http){
 			$scope.messages = data;
 	});
 
-	var socket = io("/socket");
+    var socketConnection = $.connection("/socket");
+
+    socketConnection.start().done(function () {
+        var changeRoom = {
+            currentRoom: "",
+            desiredRoom: $scope.roomName
+        }
+        socketConnection.send(changeRoom);
+    });
 
 	$scope.joinRoom = function(){
 		
@@ -85,8 +93,13 @@ ngApp.controller('chatController', function($scope, $http){
 			$scope.editRoom();
 			return;
 		}
+		var changeRoom = {
+		    currentRoom: $scope.roomName,
+		    desiredRoom: $scope.formData.roomName
+		}
+		socketConnection.send(changeRoom);
 
-		socket.emit('joinRoom', $scope.formData.roomName);
+
 		$scope.roomName = $scope.formData.roomName;
 		$scope.formData.roomName = "";
 
@@ -107,7 +120,7 @@ ngApp.controller('chatController', function($scope, $http){
 			message : $scope.formData.chatMessage
 		};
 
-		socket.emit('message', message);
+	    socketConnection.send(message);
 
 		$scope.formData.chatMessage = "";
 
@@ -118,10 +131,15 @@ ngApp.controller('chatController', function($scope, $http){
 			});
 	};
 
-//	socket.on('message', function(message){
-//		console.log("Message rcd: ", message);
-//		$scope.messages.push(message);		
-//		$scope.$apply();
+    //	socketCo.on('message', function(message){
+	socketConnection.received(function (message) {
+	    message = JSON.parse(message);
+        console.log("Message rcd: ", message);
+        console.log($scope.messages);
+        $scope.messages.push(message);
+        $scope.$apply();
+    });
+		
 //	});
 
     $scope.formatDate = function(date) {

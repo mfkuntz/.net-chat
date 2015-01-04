@@ -1,0 +1,24 @@
+<h2>
+	Room: <span ng-hide="viewRoomEdit" ng-click="editRoom();">{{roomName}}</span> 
+	
+	<span ng-show="viewRoomEdit">
+		<input type="text" ng-model="formData.roomName" placeholder="Enter Room Name" /> 
+	</span>
+
+	<button class="btn btn-primary" ng-click="joinRoom()">{{joinButtonText}}</button>
+</h2>
+
+<p>
+	
+</p>
+
+<ul class="chat">
+	<li ng-repeat="message in messages"><strong>{{message.sender}}</strong>: <span class="message">{{message.message}}</span>
+	<br/>
+	<span class="time"> &nbsp {{formatDate(message.createdAt)}}</span>
+	</li>
+</ul>
+
+<div class="form-group">
+	<input type="text" ng-model="formData.chatMessage" placeholder="Message" class="form-control" style="width:94%;display:inline-block;" /> <button class="btn btn-primary" ng-click="sendMessage()">Send</button>
+</div>

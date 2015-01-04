@@ -16,12 +16,12 @@ namespace aspChat
             // Web API routes
             config.MapHttpAttributeRoutes();
 
-            config.Routes.MapHttpRoute(
-                name: "ChatSocket",
-                routeTemplate: "socket.io",
-                defaults: new {controller = "socket"}
-            );
-
+            //config.Routes.MapHttpRoute(
+            //    name: "ChatSocket",
+            //    routeTemplate: "socket.io",
+            //    defaults: new {controller = "socket"}
+            //);
+            
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
