@@ -9,6 +9,10 @@ namespace aspChat.Models
 {
     public class DbConnection
     {
-        public NpgsqlConnection Connection => new NpgsqlConnection(ConfigurationManager.ConnectionStrings["awsPGS"].ToString());
+        public NpgsqlConnection Connection {
+            get {
+                return new NpgsqlConnection(ConfigurationManager.ConnectionStrings["awsPGS"].ToString());
+            }
+        }
     }
 }
