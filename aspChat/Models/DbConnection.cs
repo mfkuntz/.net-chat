@@ -11,7 +11,15 @@ namespace aspChat.Models
     {
         public NpgsqlConnection Connection {
             get {
-                return new NpgsqlConnection(ConfigurationManager.ConnectionStrings["awsPGS"].ToString());
+                if (! String.IsNullOrEmpty(ConfigurationManager.ConnectionStrings["awsPGS"].ToString()))
+                {
+                    return new NpgsqlConnection(ConfigurationManager.ConnectionStrings["awsPGS"].ToString());
+                }
+                else
+                {
+                    return new NpgsqlConnection(Environment.GetEnvironmentVariable("conString-awsPGS"));
+                }
+                
             }
         }
     }
